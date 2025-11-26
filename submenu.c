@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include "funcs.h"
+#include "submenu.h"
+#include <stdlib.h> // for exit()
+
 
 static void database_menu(void)
 {

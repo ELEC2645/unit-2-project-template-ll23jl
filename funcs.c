@@ -1,6 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "funcs.h"
+#include "submenu.h"
 
+/*Navigate to sub menu for plant database*/
+void menu_item_1(void) {
+    database_menu();
+}
 
 /*Compare two species' compatibility*/
 void menu_item_2(void) {
