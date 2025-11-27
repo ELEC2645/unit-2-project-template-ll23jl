@@ -1,20 +1,24 @@
+
+
+
 #include <stdio.h>
+#include <stdlib.h>     // for exit()
+
 #include "funcs.h"
 #include "submenu.h"
-#include <stdlib.h> // for exit()
 
 
-static void database_menu(void)
+void database_menu(void)
 {
     print_database_menu();
     {
-        int input = get_user_input();
+        int input = get_menu_input();
         select_submenu_item(input);
     }
 }
 
 
-static void print_database_menu(void)
+void print_database_menu(void)
 {
     printf("\n----------- Database menu -----------\n");
     printf("\n"
@@ -29,7 +33,7 @@ static void print_database_menu(void)
 }
 
 
-static void select_submenu_item(int input)
+void select_submenu_item(int input)
 {
     switch (input) {
         case 1:
@@ -45,7 +49,6 @@ static void select_submenu_item(int input)
             go_back_to_main();
             break;
         case 4:
-            go_back_to_main();
             break;
         default:
             printf("Bye!\n");

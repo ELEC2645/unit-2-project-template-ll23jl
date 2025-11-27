@@ -1,13 +1,18 @@
 // ELEC2645 Unit 2 Project Template
 // Command Line Application Menu Handling Code
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
+#include <stdio.h>      
+#include <stdlib.h>     // for exit()
+
 #include "funcs.h"
-#include "submenu.c"
+#include "submenu.h"
+
+static void main_menu(void);                // runs in the main loop
+static void print_main_menu(void);          // output the main menu description
+static void select_menu_item(int input);    // run code based on user's choice
+
+
+
 
 
 int main(void)
@@ -20,17 +25,22 @@ int main(void)
     return 0;
 }
 
-static void main_menu(void)
-{
+void main_menu(void)
+{   
+    
     print_main_menu();
     {
-        int input = get_user_input();
+        int input = get_menu_input();
         select_menu_item(input);
     }
+
+
+
+
 }
 
 
-static void print_main_menu(void)
+void print_main_menu(void)
 {
     printf("\n----------- Main menu -----------\n");
     printf("\n"
@@ -45,11 +55,11 @@ static void print_main_menu(void)
 }
 
 
-static void select_menu_item(int input)
+void select_menu_item(int input)
 {
     switch (input) {
         case 1:
-            database_menu();
+            menu_item_1();
             go_back_to_main();
             break;
         case 2:
