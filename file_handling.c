@@ -18,6 +18,9 @@ FILE open_database(struct plant *array){
     submenu_item_1();
     return *plant_database;
 
+// change this to return array, and pass pointer to function to updated-----------------------------------------------------------
+
+
 }
 
 void close_database(FILE *data){
