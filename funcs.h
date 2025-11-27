@@ -14,27 +14,10 @@ struct plant {
 };
 
 
-
-int get_menu_input(void);           // get a valid integer menu choice
-
-void menu_item_1(void);
-void menu_item_2(void);
-void menu_item_3(void);
-void menu_item_4(void);
-
-
-void submenu_item_1(void);
-void submenu_item_2(void);
-void submenu_item_3(void);
-
-
-void go_back_to_main(void);                         // wait for 'b'/'B' to continue
+int get_main_menu_input(void);                           // get a valid integer menu choice
+void go_back_to_main_menu(void);                         // wait for 'b'/'B' to continue
 int  is_integer(const char *s);                     // validate integer string
 int get_float (void);
-void open_database(void);                           // opens plant database csv
-void close_database(void);                          // closes the open database
-void retrieve_data(FILE *database);                           // reads csv file with previsouly loaded plants and updates empty structs
-void save_to_database(struct plant *species);       // saves additional/edited plants to csv
 
 
 #endif

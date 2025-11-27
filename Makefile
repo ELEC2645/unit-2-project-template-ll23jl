@@ -5,7 +5,7 @@
 # Note to students: You dont need to fully understand this! 
 
 main.out:
-	gcc main.c funcs.c submenu.c -o main.out -lm
+	gcc main.c main_menu.c funcs.c submenu.c file_handling.c -o main.out -lm
 
 clean:
 	-rm main.out

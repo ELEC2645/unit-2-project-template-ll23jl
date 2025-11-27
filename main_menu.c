@@ -1,4 +1,4 @@
-//description here please :P ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//description here please :O ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #include <stdio.h>
 #include <stdlib.h>     // for exit() // for atoi() and atof()
@@ -10,50 +10,55 @@
 #include "file_handling.h"
 #include "funcs.h"
 
-struct plant plant_array[10];
-
-/* runs in menu_item_1 */
-void database_menu(void)
-{
-    print_database_menu();
+/* runs in the main loop */
+void main_menu(void)
+{   
+    
+    print_main_menu();
     {
-        int input = get_sub_menu_input();
-        select_submenu_item(input);
+        int input = get_main_menu_input();
+        select_menu_item(input);
     }
+
+
+
+
 }
 
-/* output the submenu description */
-void print_database_menu(void)
+/* output the main menu description */
+void print_main_menu(void)
 {
-    printf("\n----------- Database menu -----------\n");
+    printf("\n----------- Main menu -----------\n");
     printf("\n"
            "\t\t\t\t\t\t\n"
-           "\t1. View plant database\t\n"
-           "\t2. Add a plant species\t\n"
-           "\t3. Edit a plant species\t\n"
-           "\t4. Return to main menu\t\t\n"
-           "\t5. Exit program\t\t\t\t\n"
+           "\t1. Plant database\t\t\n"
+           "\t2. Compare two species\t\t\n"
+           "\t3. Find compatible partner\t\t\n"
+           "\t4. Generate vivarium\t\t\n"
+           "\t5. Exit\t\t\t\t\n"
            "\t\t\t\t\t\t\n");
     printf("---------------------------------------------\n");
 }
 
 /* run code based on user's choice */
-void select_submenu_item(int input)
+void select_menu_item(int input)
 {
     switch (input) {
         case 1:
-            submenu_item_1();
-            go_back_to_sub_menu();
+            menu_item_1();
+            go_back_to_main_menu();
             break;
         case 2:
-            submenu_item_2();
-            go_back_to_sub_menu();
+            menu_item_2();
+            go_back_to_main_menu();
             break;
         case 3:
-            submenu_item_3();
-            go_back_to_sub_menu();
+            menu_item_3();
+            go_back_to_main_menu();
             break;
         case 4:
+            menu_item_4();
+            go_back_to_main_menu();
             break;
         default:
             printf("Bye!\n");
@@ -61,45 +66,38 @@ void select_submenu_item(int input)
     }
 }
 
-/* View plant database */
-void submenu_item_1(void) {
-    for (int i=0; i<10; i++){
-        printf("%s", plant_array[i].name);
-    }
-    
+/* Navigate to sub menu for plant database */
+void menu_item_1(void) {
+    database_menu();
 }
 
-/* Add a plant species */
-void submenu_item_2(void) {
-    
-    struct plant template = {0};
-    strcpy(template.name, "name");
-    template.soil_type = 0;
-    template.growth_pattern = 0;
-    template.optimal_temp = 0.0;
-    template.optimal_humidity = 0.0;
-    template.optimal_light = 0.0;
-    template.max_size = 0.0;
-    template.growth_speed = 0.0;
-
-
-
-}
-
-/* Edit a plant species */
-void submenu_item_3(void) {
+/* Compare two species' compatibility */
+void menu_item_2(void) {
     printf("\n>> Menu 2\n");
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 2 */
 }
 
+/* Find compatible partner */
+void menu_item_3(void) {
+    printf("\n>> Menu 3\n");
+    printf("\nSome code here does something useful\n");
+    /* you can call a function from here that handles menu 3 */
+}
+
+/* Generate vivarium */
+void menu_item_4(void) {
+    printf("\n>> Menu 4\n");
+    printf("\nSome code here does something useful\n");
+    /* you can call a function from here that handles menu 4 */
+}
 
 /* Return to the main menu */
-void go_back_to_sub_menu(void)
+void go_back_to_main_menu(void)
 {
     char buf[64];
     do {
-        printf("\nEnter 'b' or 'B' to go back to sub menu: ");
+        printf("\nEnter 'b' or 'B' to go back to main menu: ");
         if (!fgets(buf, sizeof(buf), stdin)) {
             puts("\nInput error. Exiting.");
             exit(1);
@@ -109,7 +107,7 @@ void go_back_to_sub_menu(void)
 }
 
 /* Check user input matches criteria for menu selection and assign to int input*/
-int get_sub_menu_input(void)
+int get_main_menu_input(void)
 {
     enum { MENU_ITEMS = 5 };   /* 1..4 = items, 5 = Exit */
     char buf[128];
