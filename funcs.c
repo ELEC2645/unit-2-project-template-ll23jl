@@ -2,13 +2,14 @@
 
 
 #include <stdio.h>
-#include <stdlib.h>     // for exit()
+#include <stdlib.h>     // for exit() // for atoi() and atof()
 #include <string.h>     // for strcspn()
 #include <ctype.h>      // for isdigit()
 
 #include "funcs.h"
 #include "submenu.h"
 
+struct plant plant_array[10];       //array of 10 empty plant structures
 
 
 /* Navigate to sub menu for plant database */
@@ -149,13 +150,60 @@ int get_float(void){
     return num;
 }
 
+/* opens plant database CSV and checks how many lines */
+int get_num_species (void){
+
+}
+
 
 void open_database(void){
     FILE *plant_database;
     plant_database = fopen("plants.csv", "r");
 }
 
-/* saves a temporary species to the plant database CSV */
+
+/* extract plant data from open file*/
+void retrieve_data(FILE *database){
+    char raw_species_data[100];                             //assume string is 100 characters or less
+    
+    for (int i=0; i<10; i++){
+        fgets(raw_species_data, 100, database);
+
+        for (int j=0; j<8; j++){
+            char *token[100];
+            strcpy(*token, strtok(raw_species_data, ","));
+            
+            switch (j){
+                case 0:
+                    strcpy(plant_array[i].name, *token);
+                case 1:
+                    plant_array[i].soil_type = atoi(*token);
+                case 2:
+                    plant_array[i].growth_pattern = atoi(*token);
+                case 3:
+                    plant_array[i].optimal_temp = atof(*token);
+                case 4:
+                    plant_array[i].optimal_humidity = atof(*token);
+                case 5:
+                    plant_array[i].optimal_light = atof(*token);
+                case 6:
+                    plant_array[i].max_size = atof(*token);
+                case 7:
+                    plant_array[i].growth_speed = atof(*token);
+                default:
+                    printf("Error - default \n");
+                    go_back_to_main();
+            }
+        }
+
+
+
+        
+    }
+    
+}
+
+/* appends a species to the plant database CSV */
 void save_to_database(struct plant *species){
     FILE *plant_database;
     plant_database = fopen("plants.csv", "a");

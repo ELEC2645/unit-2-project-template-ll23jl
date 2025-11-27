@@ -15,7 +15,6 @@ struct plant {
 
 
 
-
 int get_menu_input(void);           // get a valid integer menu choice
 
 void menu_item_1(void);
@@ -32,13 +31,10 @@ void submenu_item_3(void);
 void go_back_to_main(void);                         // wait for 'b'/'B' to continue
 int  is_integer(const char *s);                     // validate integer string
 int get_float (void);
-void open_database(void);                           // reads csv file with previsouly loaded plants and updates empty structs
+void open_database(void);                           // opens plant database csv
+void close_database(void);                          // closes the open database
+void retrieve_data(FILE *database);                           // reads csv file with previsouly loaded plants and updates empty structs
 void save_to_database(struct plant *species);       // saves additional/edited plants to csv
-
-
-
-//struct plant plant_array[10];       //array of 10 empty plant structures - unsure if needed yet :/
-
 
 
 #endif
