@@ -20,7 +20,7 @@ int main(void)
 
         /* this will run forever until exit(0) is called in select_menu_item() */
     for(;;) {
-        main_menu(plant_array);
+        main_menu();
     }
 
     save_to_database(plant_array);                  // stores modified array data back over the CSV

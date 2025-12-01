@@ -10,19 +10,6 @@
 #include "file_handling.h"
 #include "funcs.h"
 
-FILE* open_database(){
-    FILE *data = fopen("plants.csv", "r");
-    return data;
-}
-
-void close_database(FILE *data){
-    if (fclose(data) != 0) {
-        perror("Error closing file");
-    }
-    else { 
-        printf("File closed.\n");
-    }
-}
 
 
 /* extract plant data from open file*/
@@ -61,7 +48,12 @@ void retrieve_data(struct plant *array){
             }
         }
     }
-    close_database(database);
+    if (fclose(database) != 0) {                                // closes file once finished extracting data
+        perror("Error closing file");
+    }
+    else { 
+        printf("File closed.\n");
+    }
     
 }
 
@@ -75,7 +67,12 @@ void save_to_database(struct plant *array){
             array[i].optimal_temp, array[i].optimal_humidity, array[i].optimal_light, 
             array[i].max_size, array[i].growth_speed);
         }
-    close_database(plant_database);
+    if (fclose(plant_database) != 0) {                          // closes file once finished extracting data
+        perror("Error closing file");
+    }
+    else { 
+        printf("File closed.\n");
+    }
 }
 
 

@@ -13,8 +13,6 @@ struct plant {
     float growth_speed;             // on a scale of 1 (slow - oak tree) to 10 (fast - algae)
 };
 
-FILE* open_database();                           // opens plant database csv
-void close_database(FILE *data);                    // closes the open database
 
 void retrieve_data(struct plant *array);                           // reads csv file with previsouly loaded plants and updates empty structs
 void save_to_database(struct plant *array);       // saves additional/edited plants to csv

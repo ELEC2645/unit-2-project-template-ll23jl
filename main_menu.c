@@ -11,18 +11,13 @@
 #include "funcs.h"
 
 /* runs in the main loop */
-void main_menu(struct plant *array)
+void main_menu(void)
 {   
-    
     print_main_menu();
     {
         int input = get_main_menu_input();
         select_menu_item(input);
     }
-
-
-
-
 }
 
 /* output the main menu description */
