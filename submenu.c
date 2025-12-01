@@ -10,7 +10,6 @@
 #include "file_handling.h"
 #include "funcs.h"
 
-struct plant plant_array[10];
 
 /* runs in menu_item_1 */
 void database_menu(void)
@@ -64,7 +63,7 @@ void select_submenu_item(int input)
 /* View plant database */
 void submenu_item_1(void) {
     for (int i=0; i<10; i++){
-        printf("%s", plant_array[i].name);
+        
     }
     
 }

@@ -2,7 +2,7 @@
 #define MAIN_MENU_H
 
 
-void main_menu(void);                        // runs in the main loop
+void main_menu(struct plant *array);                        // runs in the main loop
 void print_main_menu(void);                  // output the main menu description
 void select_menu_item(int input);            // run code based on user's choice
 int get_main_menu_input(void);                           // get a valid integer menu choice

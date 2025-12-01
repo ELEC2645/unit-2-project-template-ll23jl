@@ -10,17 +10,9 @@
 #include "file_handling.h"
 #include "funcs.h"
 
-FILE open_database(struct plant *array){
-    FILE *plant_database;
-    plant_database = fopen("plants.csv", "r");
-
-    retrieve_data(plant_database, array);
-    submenu_item_1();
-    return *plant_database;
-
-// change this to return array, and pass pointer to function to updated-----------------------------------------------------------
-
-
+FILE* open_database(){
+    FILE *data = fopen("plants.csv", "r");
+    return data;
 }
 
 void close_database(FILE *data){
@@ -34,9 +26,11 @@ void close_database(FILE *data){
 
 
 /* extract plant data from open file*/
-void retrieve_data(FILE *database, struct plant *plant_array){
+void retrieve_data(struct plant *array){
     char raw_species_data[100];                             //assume string is 100 characters or less
     
+    FILE *database = fopen("plants.csv", "r");
+
     for (int i=0; i<10; i++){
         fgets(raw_species_data, 100, database);
 
@@ -44,42 +38,44 @@ void retrieve_data(FILE *database, struct plant *plant_array){
             char *token[100];
             strcpy(*token, strtok(raw_species_data, ","));
             
-            switch (j){
-                case 0:
-                    strcpy(plant_array[i].name, *token);
+            switch (j){                                         // assigns each column in the data to the corresponding struct feature
+                case 0:                                         // assume the data will always be in the correct columns and of correct data type
+                    strcpy(array[i].name, *token);
                 case 1:
-                    plant_array[i].soil_type = atoi(*token);
+                    array[i].soil_type = atoi(*token);
                 case 2:
-                    plant_array[i].growth_pattern = atoi(*token);
+                    array[i].growth_pattern = atoi(*token);
                 case 3:
-                    plant_array[i].optimal_temp = atof(*token);
+                    array[i].optimal_temp = atof(*token);
                 case 4:
-                    plant_array[i].optimal_humidity = atof(*token);
+                    array[i].optimal_humidity = atof(*token);
                 case 5:
-                    plant_array[i].optimal_light = atof(*token);
+                    array[i].optimal_light = atof(*token);
                 case 6:
-                    plant_array[i].max_size = atof(*token);
+                    array[i].max_size = atof(*token);
                 case 7:
-                    plant_array[i].growth_speed = atof(*token);
+                    array[i].growth_speed = atof(*token);
                 default:
                     printf("Error - default \n");
                     go_back_to_main_menu();
             }
         }
     }
+    close_database(database);
     
 }
 
 /* appends a species to the plant database CSV */
-void save_to_database(struct plant *species){
+void save_to_database(struct plant *array){
     FILE *plant_database;
     plant_database = fopen("plants.csv", "w");
     for(int i=0; i<10; i++){
         fprintf(plant_database, "%s,%i,%i,%.2f,%.2f,%.2f,%.2f,%.2f", 
-            species->name, species->soil_type, species->growth_pattern, 
-            species->optimal_temp, species->optimal_humidity, species->optimal_light, 
-            species->max_size, species->growth_speed);
+            array[i].name, array[i].soil_type, array[i].growth_pattern, 
+            array[i].optimal_temp, array[i].optimal_humidity, array[i].optimal_light, 
+            array[i].max_size, array[i].growth_speed);
         }
+    close_database(plant_database);
 }
 
 

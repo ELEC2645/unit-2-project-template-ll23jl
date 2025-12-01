@@ -14,16 +14,18 @@ for generating miniture ecosystems */
 int main(void)
 {
     
-    struct plant plant_array[10];                   //create empty array of plant structures
+    struct plant plant_array[10];                   // create empty array of plant structures
 
-    FILE plant_database = open_database(&plant_array);
-
-
+    retrieve_data(plant_array);                     // populates array with data currently in CSV
 
         /* this will run forever until exit(0) is called in select_menu_item() */
     for(;;) {
-        main_menu();
+        main_menu(plant_array);
     }
+
+    save_to_database(plant_array);                  // stores modified array data back over the CSV
+
+
 
     /* not reached */
     return 0;

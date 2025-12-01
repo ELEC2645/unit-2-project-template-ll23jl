@@ -11,7 +11,7 @@
 #include "funcs.h"
 
 /* runs in the main loop */
-void main_menu(void)
+void main_menu(struct plant *array)
 {   
     
     print_main_menu();
