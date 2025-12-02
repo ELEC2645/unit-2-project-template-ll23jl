@@ -7,7 +7,6 @@
 
 #include "main_menu.h"
 #include "submenu.h"
-#include "file_handling.h"
 #include "funcs.h"
 
 /* runs in the main loop */

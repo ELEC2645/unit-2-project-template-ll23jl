@@ -7,7 +7,6 @@
 
 #include "main_menu.h"
 #include "submenu.h"
-#include "file_handling.h"
 #include "funcs.h"
 
 
@@ -73,8 +72,8 @@ void submenu_item_2(void) {
     
     struct plant template = {0};
     strcpy(template.name, "name");
-    template.soil_type = 0;
-    template.growth_pattern = 0;
+    strcpy(template.soil_type, "soil type");
+    strcpy(template.growth_pattern, "growth pattern");
     template.optimal_temp = 0.0;
     template.optimal_humidity = 0.0;
     template.optimal_light = 0.0;
