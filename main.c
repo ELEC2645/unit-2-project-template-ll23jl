@@ -38,7 +38,7 @@ int main(void)
         
         /* this will run forever until exit(0) is called in select_menu_item() */
     for(;;) {
-        main_menu();
+        main_menu(*plant_array);
     }
 
 

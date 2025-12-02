@@ -10,12 +10,12 @@
 #include "funcs.h"
 
 /* runs in the main loop */
-void main_menu(void)
+void main_menu(struct plant *array)
 {   
     print_main_menu();
     {
         int input = get_main_menu_input();
-        select_menu_item(input);
+        select_menu_item(input, array);
     }
 }
 
@@ -35,11 +35,11 @@ void print_main_menu(void)
 }
 
 /* run code based on user's choice */
-void select_menu_item(int input)
+void select_menu_item(int input, struct plant *array)
 {
     switch (input) {
         case 1:
-            menu_item_1();
+            menu_item_1(array);
             go_back_to_main_menu();
             break;
         case 2:
@@ -61,8 +61,8 @@ void select_menu_item(int input)
 }
 
 /* Navigate to sub menu for plant database */
-void menu_item_1(void) {
-    database_menu();
+void menu_item_1(struct plant *array) {
+    database_menu(array);
 }
 
 /* Compare two species' compatibility */

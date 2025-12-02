@@ -11,17 +11,17 @@
 
 
 /* runs in menu_item_1 */
-void database_menu(void)
+void database_menu(struct plant *array)
 {
-    print_database_menu();
+    print_sub_menu();
     {
         int input = get_sub_menu_input();
-        select_submenu_item(input);
+        select_submenu_item(input, array);
     }
 }
 
 /* output the submenu description */
-void print_database_menu(void)
+void print_sub_menu(void)
 {
     printf("\n----------- Database menu -----------\n");
     printf("\n"
@@ -36,20 +36,17 @@ void print_database_menu(void)
 }
 
 /* run code based on user's choice */
-void select_submenu_item(int input)
+void select_submenu_item(int input, struct plant *array)
 {
     switch (input) {
         case 1:
-            submenu_item_1();
-            go_back_to_sub_menu();
+            submenu_item_1(array);
             break;
         case 2:
             submenu_item_2();
-            go_back_to_sub_menu();
             break;
         case 3:
             submenu_item_3();
-            go_back_to_sub_menu();
             break;
         case 4:
             break;
@@ -60,11 +57,13 @@ void select_submenu_item(int input)
 }
 
 /* View plant database */
-void submenu_item_1(void) {
-    for (int i=0; i<10; i++){
-        
-    }
-    
+void submenu_item_1(struct plant *array) {
+    for (int i = 0; i<10; i++){
+        printf("\n\n%s; \n\tsoil type: \t\t\t\t%s; \n\tgrowth pattern: \t\t\t%s, \n\toptimal temperature: \t\t\t%.2f \t%cC; \n\toptimal humidity: \t\t\t%.2f \t%%;" 
+            "\n\toptimal light conditions: \t\t%.0f \tlm; \n\tmaximum size: \t\t\t\t%.2f \tmm; \n\tgrowth speed: \t\t\t\t%.2f \t/10.",
+            array[i].name, array[i].soil_type, array[i].growth_pattern, array[i].optimal_temp, 176, 
+            array[i].optimal_humidity,array[i].optimal_light,array[i].max_size,array[i].growth_speed);
+        }
 }
 
 /* Add a plant species */
@@ -92,20 +91,6 @@ void submenu_item_3(void) {
     /* you can call a function from here that handles menu 2 */
 }
 
-
-/* Return to the main menu */
-void go_back_to_sub_menu(void)
-{
-    char buf[64];
-    do {
-        printf("\nEnter 'b' or 'B' to go back to sub menu: ");
-        if (!fgets(buf, sizeof(buf), stdin)) {
-            puts("\nInput error. Exiting.");
-            exit(1);
-        }
-        buf[strcspn(buf, "\r\n")] = '\0'; /* strip newline */
-    } while (!(buf[0] == 'b' || buf[0] == 'B') || buf[1] != '\0');
-}
 
 /* Check user input matches criteria for menu selection and assign to int input*/
 int get_sub_menu_input(void)
