@@ -7,7 +7,7 @@ void select_submenu_item(int input, struct plant *array);            // run code
 int get_sub_menu_input(void);                           // get a valid integer menu choice
 
 void submenu_item_1(struct plant *array);
-void submenu_item_2(void);
-void submenu_item_3(void);
+void submenu_item_2(struct plant *array);
+void submenu_item_3(struct plant *array);
 
 #endif

@@ -16,7 +16,6 @@ struct plant {
 void main_menu(struct plant *array);         // runs in the main loop
 void print_main_menu(void);                  // output the main menu description
 void select_menu_item(int input, struct plant *array);            // run code based on user's choice
-int get_main_menu_input(void);               // get a valid integer menu choice
 void go_back_to_main_menu(void); 
 
 void menu_item_1(struct plant *array);

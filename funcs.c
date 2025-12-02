@@ -30,7 +30,7 @@ int is_integer(const char *s)
 }
 
 
-int get_float(void){
+float get_float(void){
 
     float num;
     
@@ -44,4 +44,75 @@ int get_num_species (void){
 
 }
 
+/* Check user input matches criteria for menu selection and assign to int input*/
+int get_menu_input(void)
+{
+    enum { MENU_ITEMS = 5 };   /* 1..4 = items, 5 = Exit */
+    char buf[128];
+    int valid_input = 0;
+    int value = 0;
 
+    do {
+        printf("\nSelect item: ");
+        if (!fgets(buf, sizeof(buf), stdin)) {
+            /* EOF or error; bail out gracefully */
+            puts("\nInput error. Exiting.");
+            exit(1);
+        }
+
+        // strip trailing newline
+        buf[strcspn(buf, "\r\n")] = '\0';
+
+        if (!is_integer(buf)) {
+            printf("Enter an integer!\n");
+            valid_input = 0;
+        } else {
+            value = (int)strtol(buf, NULL, 10);
+            if (value >= 1 && value <= MENU_ITEMS) {
+                valid_input = 1;
+            } else {
+                printf("Invalid menu item!\n");
+                valid_input = 0;
+            }
+        }
+    } while (!valid_input);
+
+    return value;
+}
+
+/* Check user input matches criteria for menu selection and assign to int input*/
+int get_array_selection(void)
+{
+    enum { MENU_ITEMS = 9 };   /* 1..4 = items, 5 = Exit */
+    char buf[128];
+    int valid_input = 0;
+    int value = 0;
+
+    do {
+        printf("\nSelect item: ");
+        if (!fgets(buf, sizeof(buf), stdin)) {
+            /* EOF or error; bail out gracefully */
+            puts("\nInput error. Exiting.");
+            exit(1);
+        }
+
+        // strip trailing newline
+        buf[strcspn(buf, "\r\n")] = '\0';
+        
+
+        if (!is_integer(buf)) {
+            printf("Enter an integer!\n");
+            valid_input = 0;
+        } else {
+            value = (int)strtol(buf, NULL, 10);
+            if (value >= 0 && value <= MENU_ITEMS) {
+                valid_input = 1;
+            } else {
+                printf("Invalid menu item!\n");
+                valid_input = 0;
+            }
+        }
+    } while (!valid_input);
+
+    return value;
+}
