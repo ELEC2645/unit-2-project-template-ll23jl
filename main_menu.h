@@ -19,8 +19,8 @@ void select_menu_item(int input, struct plant *array);            // run code ba
 void go_back_to_main_menu(void); 
 
 void menu_item_1(struct plant *array);
-void menu_item_2(void);
-void menu_item_3(void);
-void menu_item_4(void);
+void menu_item_2(struct plant *array);
+void menu_item_3(struct plant *array);
+void menu_item_4(struct plant *array);
 
 #endif

@@ -23,14 +23,14 @@ void database_menu(struct plant *array)
 /* output the submenu description */
 void print_sub_menu(void)
 {
-    printf("\n----------- Database menu -----------\n");
+    printf("\n--------------- Database menu ---------------\n");
     printf("\n"
            "\t\t\t\t\t\t\n"
-           "\t1. View plant database\t\n"
-           "\t2. Add a plant species\t\n"
-           "\t3. Edit a plant species\t\n"
-           "\t4. Return to main menu\t\t\n"
-           "\t5. Exit program\t\t\t\t\n"
+           "\t\t1. View plant database\t\n"
+           "\t\t2. Add a plant species\t\n"
+           "\t\t3. Edit a plant species\t\n"
+           "\t\t4. Return to main menu\t\t\n"
+           "\t\t5. Exit program\t\t\t\t\n"
            "\t\t\t\t\t\t\n");
     printf("---------------------------------------------\n");
 }
@@ -59,9 +59,9 @@ void select_submenu_item(int input, struct plant *array)
 /* View plant database */
 void submenu_item_1(struct plant *array) {
     for (int i = 0; i<10; i++){
-        printf("\n\n%s; \n\tsoil type: \t\t\t\t%s; \n\tgrowth pattern: \t\t\t%s; \n\toptimal temperature: \t\t\t%.2f \t%cC; \n\toptimal humidity: \t\t\t%.2f \t%%;" 
-            "\n\toptimal light conditions: \t\t%.0f \tlm; \n\tmaximum size: \t\t\t\t%.2f \tmm; \n\tgrowth speed: \t\t\t\t%.2f \t/10.",
-            array[i].name, array[i].soil_type, array[i].growth_pattern, array[i].optimal_temp, 176, 
+        printf("\n\n%s; \n\tsoil type: \t\t\t\t%s; \n\tgrowth pattern: \t\t\t%s; \n\toptimal temperature: \t\t\t%.2f \u00B0C; \n\toptimal humidity: \t\t\t%.2f %%;" 
+            "\n\toptimal light conditions: \t\t%.0f lm; \n\tmaximum size: \t\t\t\t%.2f mm; \n\tgrowth speed: \t\t\t\t%.2f /10.",
+            array[i].name, array[i].soil_type, array[i].growth_pattern, array[i].optimal_temp, 
             array[i].optimal_humidity,array[i].optimal_light,array[i].max_size,array[i].growth_speed);
         };
 }

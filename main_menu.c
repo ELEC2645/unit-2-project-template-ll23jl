@@ -22,14 +22,14 @@ void main_menu(struct plant *array)
 /* output the main menu description */
 void print_main_menu(void)
 {
-    printf("\n----------- Main menu -----------\n");
+    printf("\n----------------- Main menu -----------------\n");
     printf("\n"
            "\t\t\t\t\t\t\n"
-           "\t1. Plant database\t\t\n"
-           "\t2. Compare two species\t\t\n"
-           "\t3. Find compatible partner\t\t\n"
-           "\t4. Generate vivarium\t\t\n"
-           "\t5. Exit\t\t\t\t\n"
+           "\t\t1. Plant database\t\t\n"
+           "\t\t2. Compare two species\t\t\n"
+           "\t\t3. Find compatible partner\t\t\n"
+           "\t\t4. Generate vivarium\t\t\n"
+           "\t\t5. Exit\t\t\t\t\n"
            "\t\t\t\t\t\t\n");
     printf("---------------------------------------------\n");
 }
@@ -43,15 +43,15 @@ void select_menu_item(int input, struct plant *array)
             go_back_to_main_menu();
             break;
         case 2:
-            menu_item_2();
+            menu_item_2(array);
             go_back_to_main_menu();
             break;
         case 3:
-            menu_item_3();
+            menu_item_3(array);
             go_back_to_main_menu();
             break;
         case 4:
-            menu_item_4();
+            menu_item_4(array);
             go_back_to_main_menu();
             break;
         default:
@@ -66,21 +66,26 @@ void menu_item_1(struct plant *array) {
 }
 
 /* Compare two species' compatibility */
-void menu_item_2(void) {
-    printf("\n>> Menu 2\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 2 */
+void menu_item_2(struct plant *array) {
+    printf("Choose species one:");
+    for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
+    int sp_1 = get_array_selection();                                           //index of plant 1
+    printf("Choose species two:");
+    for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
+    int sp_2 = get_array_selection();                                           //index of plant 2
+    
+    printf("\nSelected: %s and %s", array[sp_1].name, array[sp_2].name);
 }
 
 /* Find compatible partner */
-void menu_item_3(void) {
+void menu_item_3(struct plant *array) {
     printf("\n>> Menu 3\n");
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 3 */
 }
 
 /* Generate vivarium */
-void menu_item_4(void) {
+void menu_item_4(struct plant *array) {
     printf("\n>> Menu 4\n");
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 4 */
