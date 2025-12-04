@@ -13,9 +13,9 @@ struct plant {
     float growth_speed;             // on a scale of 1 (slow - oak tree) to 10 (fast - algae)
 };
 
-void main_menu(struct plant *array);         // runs in the main loop
-void print_main_menu(void);                  // output the main menu description
-void select_menu_item(int input, struct plant *array);            // run code based on user's choice
+void main_menu(struct plant *array);                                // runs in the main loop
+void print_main_menu(void);                                         // output the main menu description
+void select_menu_item(int input, struct plant *array);              // run code based on user's choice
 void go_back_to_main_menu(void); 
 
 void menu_item_1(struct plant *array);
