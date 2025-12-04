@@ -30,20 +30,6 @@ int is_integer(const char *s)
 }
 
 
-float get_float(void){
-
-    float num;
-    
-    scanf("%f", &num);
-
-    return num;
-}
-
-/* opens plant database CSV and checks how many lines */
-int get_num_species (void){
-
-}
-
 /* Check user input matches criteria for menu selection and assign to int input*/
 int get_menu_input(void)
 {
@@ -101,8 +87,13 @@ int get_array_selection(void)
         
 
         if (!is_integer(buf)) {
+            if(buf[0]=='b'||buf[0]=='b'){
+                return -1; 
+                }
+            else{
             printf("Enter an integer!\n");
             valid_input = 0;
+            }
         } else {
             value = (int)strtol(buf, NULL, 10);
             if (value >= 0 && value <= MENU_ITEMS) {
@@ -115,4 +106,13 @@ int get_array_selection(void)
     } while (!valid_input);
 
     return value;
+}
+
+/* Takes plant array and two plant index's and compares the two plants, outputs a _______________________________*/
+int compare(struct plant *array, int sp_1, int sp_2){
+    
+    printf("Soil: \n\t%s - %s \n\t%s - %s", array[sp_1].name,array[sp_1].soil_type, array[sp_2].name, array[sp_2].soil_type);
+
+    if (strcmp(array[sp_1].soil_type,array[sp_2].soil_type)){return 0;}     // compares two
+    else {return 1;}
 }

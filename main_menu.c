@@ -67,14 +67,21 @@ void menu_item_1(struct plant *array) {
 
 /* Compare two species' compatibility */
 void menu_item_2(struct plant *array) {
-    printf("Choose species one:");
     for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
+    printf("\nChoose species one:");
     int sp_1 = get_array_selection();                                           //index of plant 1
-    printf("Choose species two:");
-    for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
+    if(sp_1==-1){return;}
+    printf("\nChoose species two:");
     int sp_2 = get_array_selection();                                           //index of plant 2
-    
+    if(sp_2==-1){return;}
+
     printf("\nSelected: %s and %s", array[sp_1].name, array[sp_2].name);
+    int result = compare(array, sp_1, sp_2);
+
+    printf("\n\nResult = %d", result);
+
+    if (result == 1){printf("\n\nThese two plants are compatible");}
+    else {printf("\n\nThese two plants are not compatible");}    
 }
 
 /* Find compatible partner */

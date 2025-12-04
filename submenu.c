@@ -72,7 +72,8 @@ void submenu_item_2(struct plant *array) {
     printf("\nChoose a row to overwrite:");
     for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
     
-    int ov_r = get_array_selection();                                           //index of plant to overwrite
+    int ov_r = get_array_selection();                               //index of plant to overwrite
+    if(ov_r==-1){return;}
     printf("\nselected: %d - %s", ov_r, array[ov_r].name);
 
     printf("\nEnter new plant details:");
