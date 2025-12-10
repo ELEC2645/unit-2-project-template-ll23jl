@@ -58,12 +58,12 @@ void select_submenu_item(int input, struct plant *array)
 
 /* View plant database */
 void submenu_item_1(struct plant *array) {
+    
+    printf("\n %s \n", array[1].name);
+    
     for (int i = 0; i<10; i++){
-        printf("\n\n%s; \n\tsoil type: \t\t\t\t%s; \n\tgrowth pattern: \t\t\t%s; \n\toptimal temperature: \t\t\t%.2f \u00B0C; \n\toptimal humidity: \t\t\t%.2f %%;" 
-            "\n\toptimal light conditions: \t\t%.0f lm; \n\tmaximum size: \t\t\t\t%.2f mm; \n\tgrowth speed: \t\t\t\t%.2f /10.",
-            array[i].name, array[i].soil_type, array[i].growth_pattern, array[i].optimal_temp, 
-            array[i].optimal_humidity,array[i].optimal_light,array[i].max_size,array[i].growth_speed);
-        };
+        print_plant(array, i);    
+    };
 }
 
 /* Add a plant species */
@@ -72,33 +72,38 @@ void submenu_item_2(struct plant *array) {
     printf("\nChoose a row to overwrite:");
     for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
     
-    int ov_r = get_array_selection();                               //index of plant to overwrite
-    if(ov_r==-1){return;}
+    int ov_r = get_array_selection();                               
+    if(ov_r==-1){return;}                                           //index of plant to overwrite
     printf("\nselected: %d - %s", ov_r, array[ov_r].name);
 
     printf("\nEnter new plant details:");
     printf("\n\tName:");
     fgets(array[ov_r].name, 100, stdin);
+    array[ov_r].name[strcspn(array[ov_r].name, "\n")] = 0;          //strips \n from end of input string
     printf("\n\tSoil type:");
     fgets(array[ov_r].soil_type, 100, stdin);
+    array[ov_r].soil_type[strcspn(array[ov_r].soil_type, "\n")] = 0;
     printf("\n\tGrowth pattern:");
     fgets(array[ov_r].growth_pattern, 100, stdin);
-    printf("\n\tOptimal temperature:");
-    scanf("%f", &array[ov_r].optimal_temp);
-    printf("\n\tOptimal humidity:");
-    scanf("%f", &array[ov_r].optimal_humidity);
-    printf("\n\tOptimal light:");
-    scanf("%f", &array[ov_r].optimal_light);
+    array[ov_r].growth_pattern[strcspn(array[ov_r].growth_pattern, "\n")] = 0;
+    printf("\n\tMinimum temperature:");
+    scanf("%f", &array[ov_r].min_temp);
+    printf("\n\tMaximum temperature:");
+    scanf("%f", &array[ov_r].max_temp);
+    printf("\n\tMinimum humidity:");
+    scanf("%f", &array[ov_r].min_humidity);
+    printf("\n\tMaximum humidity:");
+    scanf("%f", &array[ov_r].max_humidity);
+    printf("\n\tMinimum light:");
+    scanf("%f", &array[ov_r].min_light);
+    printf("\n\tMaximum light:");
+    scanf("%f", &array[ov_r].max_light);
     printf("\n\tMax size:");
     scanf("%f", &array[ov_r].max_size);
     printf("\n\tGrowth speed:");
     scanf("%f", &array[ov_r].growth_speed);
 
-    printf("\nNew plant details:\n\n%s; \n\tsoil type: \t\t\t\t%s; \n\tgrowth pattern: \t\t\t%s; \n\toptimal temperature: \t\t\t%.2f \t%cC; \n\toptimal humidity: \t\t\t%.2f \t%%;" 
-            "\n\toptimal light conditions: \t\t%.0f \tlm; \n\tmaximum size: \t\t\t\t%.2f \tmm; \n\tgrowth speed: \t\t\t\t%.2f \t/10.",
-            array[ov_r].name, array[ov_r].soil_type, array[ov_r].growth_pattern, array[ov_r].optimal_temp, 176, 
-            array[ov_r].optimal_humidity,array[ov_r].optimal_light,array[ov_r].max_size,array[ov_r].growth_speed);
-
+    print_plant(array, ov_r);
 }
 
 /* Edit a plant species */

@@ -111,39 +111,64 @@ int get_array_selection(void)
 /* Takes plant array and two plant indexes and compares the two plants, outputs a 1 or 0 */
 int compare(struct plant *array, int sp_1, int sp_2){
     
-    printf("Soil: \n\t%s - %s \n\t%s - %s", array[sp_1].name,array[sp_1].soil_type, array[sp_2].name, array[sp_2].soil_type);
+    if (strcmp(array[sp_1].soil_type,array[sp_2].soil_type))
+        {return 0;}             // compares soil types. returns 0 if they don't match
 
-    if (strcmp(array[sp_1].soil_type,array[sp_2].soil_type)){return 0;}     // compares two
-    else {return 1;}
+    else if (array[sp_1].min_temp>array[sp_2].max_temp||array[sp_2].min_temp>array[sp_1].max_temp)
+        {return 0;}             // check for overlap of temperatures, if none, returns 0
+
+    else if (array[sp_1].min_humidity>array[sp_2].max_humidity||array[sp_2].min_humidity>array[sp_1].max_humidity)
+        {return 0;}             // check for overlap of humidity levels, if none, returns 0
+
+    else if (array[sp_1].min_light>array[sp_2].max_light||array[sp_2].min_light>array[sp_1].max_light)
+        {return 0;}             // check for overlap of light levels, if none, returns 0
+
+
+    else {return 1;}            // if all statements above false, returns 1
 }
 
-
+/* Prints plant species characteristics to terminal */
+void print_plant (struct plant *array, int sp){
+    printf("\n\n%s; \n\tsoil type: \t\t\t%s; \n\tgrowth pattern: \t\t%s; \n\tmin temperature: \t\t%.2f \u00B0C; \n\tmax temperature: \t\t%.2f \u00B0C;"
+                "\n\tmin humidity: \t\t\t%.2f %%; \n\tmax humidity: \t\t\t%.2f %%; \n\tmin light conditions: \t\t%.0f lm;" 
+            "\n\tmax light conditions: \t\t%.0f lm; \n\tmaximum size: \t\t\t%.2f mm; \n\tgrowth speed: \t\t\t%.2f /10",
+            array[sp].name, array[sp].soil_type, array[sp].growth_pattern, array[sp].min_temp, array[sp].max_temp, 
+            array[sp].min_humidity,array[sp].max_humidity,array[sp].min_light,array[sp].max_light,array[sp].max_size,array[sp].growth_speed);
+}
 
 // ------------------ K-means clustering functions ------------------
 
-void k_means (void){
+void k_means (struct plant *array){
+
+
     int k = 5;                              // number of clusters I want to sort data into
     int n = 7;                              // number of features of the dataset
 
-    struct plant centroid_1 = (struct plant){"Centroid 1","N/A","N/A",18.6,32.96,448.84,1478.41,1.65};          // change these values later to be randomised and spread out
-    struct plant centroid_2 = (struct plant){"Centroid 2","N/A","N/A",18.6,32.96,448.84,1478.41,1.65};          // alternatively, use roughly correct values for a particular habitat as centroid
-    struct plant centroid_3 = (struct plant){"Centroid 3","N/A","N/A",18.6,32.96,448.84,1478.41,1.65};          // eg: river bank, woodland, marsh, tropical beach, etc.
-    struct plant centroid_4 = (struct plant){"Centroid 4","N/A","N/A",18.6,32.96,448.84,1478.41,1.65};
-    struct plant centroid_5 = (struct plant){"Centroid 5","N/A","N/A",18.6,32.96,448.84,1478.41,1.65};
+    struct plant centroid[k];               // array of centroid plant structs
 
+    for(int i=0; i<k; i++){
+        centroid[i].min_temp = rand() % (31);
+        centroid[i].max_temp = rand() % (51);
+        centroid[i].min_light = rand() % (1502);
+        centroid[i].max_light = rand() % (7001);
+        centroid[i].min_humidity = rand() % (60-30+1+30);
+        centroid[i].max_humidity = rand() % (101);
+    }
+
+    print_plant(centroid,0);
+    
+
+    
 
 }
 
 
 float eucl_dis (struct plant *array, int sp_1, struct plant centroid){
 
-    float sum = square(array[sp_1].optimal_humidity - centroid.optimal_humidity)
-              - square(array[sp_1].optimal_temp - centroid.optimal_temp)
-              - square(array[sp_1].optimal_light - centroid.optimal_light);
+    float sum = 0.8;
     float distance = sqrt(sum);
     return distance;
 }
-
 
 
 

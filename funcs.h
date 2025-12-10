@@ -6,8 +6,10 @@ int get_menu_input(void);                                   // get a valid integ
 void go_back_to_main_menu(void);                            // wait for 'b'/'B' to continue
 int  is_integer(const char *s);                             // validate integer string
 int get_array_selection(void);                              // 
-int compare(struct plant *array, int sp_1, int sp_2);       
-float eucl_dis (struct plant *array, int sp_1, struct plant centroid)
+int compare(struct plant *array, int sp_1, int sp_2);
+void print_plant (struct plant *array, int sp);   
+void k_means (struct plant *array);    
+float eucl_dis (struct plant *array, int sp_1, struct plant centroid);
 
 
 #endif

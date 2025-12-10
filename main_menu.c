@@ -69,16 +69,16 @@ void menu_item_1(struct plant *array) {
 void menu_item_2(struct plant *array) {
     for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
     printf("\nChoose species one:");
-    int sp_1 = get_array_selection();                                           //index of plant 1
-    if(sp_1==-1){return;}
+    int sp_1 = get_array_selection();               //index of plant 1
+    if(sp_1==-1){return;}                           // go back to main menu if "b"||"B" is input
     printf("\nChoose species two:");
-    int sp_2 = get_array_selection();                                           //index of plant 2
-    if(sp_2==-1){return;}
+    int sp_2 = get_array_selection();               //index of plant 2
+    if(sp_2==-1){return;}                           // go back to main menu if "b"||"B" is input
 
-    printf("\nSelected: %s and %s", array[sp_1].name, array[sp_2].name);
+    print_plant(array, sp_1);
+    print_plant(array, sp_2); 
+
     int result = compare(array, sp_1, sp_2);
-
-    printf("\n\nResult = %d", result);
 
     if (result == 1){printf("\n\nThese two plants are compatible");}
     else {printf("\n\nThese two plants are not compatible");}    
@@ -86,16 +86,42 @@ void menu_item_2(struct plant *array) {
 
 /* Find compatible partner */
 void menu_item_3(struct plant *array) {
-    printf("\n>> Menu 3\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 3 */
+
+    struct plant plant_array[10];                  // create empty array of plant structures
+
+    for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
+    printf("\nChoose species:");
+    int sp = get_array_selection();                 // index of plant 1
+    if(sp==-1){return;}                             // go back to main menu if "b"||"B" is input
+
+    int place = 0;                                  // placeholder for the array index
+
+
+    for (int i = 0; i<10; i++){
+        if (i==sp){continue;}                       // skips comparison between chosen plant and itself
+        int result = compare(array, sp, i);
+        if (result==1){
+            plant_array[place] = array[i];          //add compatible plant to array at placeholder index
+            place++;
+        }
+         
+    }
+
+    if(place==0){
+        printf("There are no compatible plant species");
+    }
+
+    else {
+        printf("\nCompatible plant species for %s: \n", array[sp].name);
+        for (int i = 0; i < place; i++){
+            print_plant(plant_array,i);
+        }
+    }
 }
 
 /* Generate vivarium */
 void menu_item_4(struct plant *array) {
-    printf("\n>> Menu 4\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 4 */
+    k_means(array);
 }
 
 /* Return to the main menu */

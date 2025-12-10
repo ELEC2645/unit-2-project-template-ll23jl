@@ -6,9 +6,12 @@ struct plant {
     char name[100];
     char soil_type[100];            // sandy, loamy, chalk, clay, etc
     char growth_pattern[100];       // ground cover, climbing, upright, etc
-    float optimal_temp;             // in degrees Celcius
-    float optimal_humidity;         // in percent
-    float optimal_light;            // in lumens
+    float min_temp;                 // in degrees Celcius
+    float max_temp;                 // in degrees Celcius
+    float min_humidity;             // in percent
+    float max_humidity;             // in percent
+    float min_light;                // in lumens
+    float max_light;                // in lumens
     float max_size;                 // in mm
     float growth_speed;             // on a scale of 1 (slow - oak tree) to 10 (fast - algae)
 };
