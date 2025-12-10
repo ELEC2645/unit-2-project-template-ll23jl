@@ -73,19 +73,19 @@ void submenu_item_2(struct plant *array) {
     for (int i = 0; i<10; i++){printf("\n %d - %s", i, array[i].name);};
     
     int ov_r = get_array_selection();                               
-    if(ov_r==-1){return;}                                           //index of plant to overwrite
+    if(ov_r==-1){return;}                                           // index of plant to overwrite
     printf("\nselected: %d - %s", ov_r, array[ov_r].name);
+
+/* Uses user inputs to retrieve data for each member of the struct: */
 
     printf("\nEnter new plant details:");
     printf("\n\tName:");
     fgets(array[ov_r].name, 100, stdin);
-    array[ov_r].name[strcspn(array[ov_r].name, "\n")] = 0;          //strips \n from end of input string
-    printf("\n\tSoil type:");
-    fgets(array[ov_r].soil_type, 100, stdin);
-    array[ov_r].soil_type[strcspn(array[ov_r].soil_type, "\n")] = 0;
-    printf("\n\tGrowth pattern:");
-    fgets(array[ov_r].growth_pattern, 100, stdin);
-    array[ov_r].growth_pattern[strcspn(array[ov_r].growth_pattern, "\n")] = 0;
+    array[ov_r].name[strcspn(array[ov_r].name, "\n")] = 0;          // strips \n from end of input string
+    printf("\n\tSoil type: \n\t0 = Generic \n\t1 = Sandy, \n\t2 = Dense, \n\t3 = Bark mix, \n\t4 = Bog, \n\t5 = Chunky, \n\t6 = Aquatic, \n\t7 = Light");
+    scanf("%d", &array[ov_r].soil_type);
+    printf("\n\tGrowth pattern: \n\t0 = Ground cover, \n\t1 = Upright, \n\t2 = Spreading/bushy, \n\t3 = Climbing, \n\t4 = Trailing");
+    scanf("%d", &array[ov_r].growth_pattern);
     printf("\n\tMinimum temperature:");
     scanf("%f", &array[ov_r].min_temp);
     printf("\n\tMaximum temperature:");

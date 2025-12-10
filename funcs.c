@@ -111,7 +111,7 @@ int get_array_selection(void)
 /* Takes plant array and two plant indexes and compares the two plants, outputs a 1 or 0 */
 int compare(struct plant *array, int sp_1, int sp_2){
     
-    if (strcmp(array[sp_1].soil_type,array[sp_2].soil_type))
+    if (array[sp_1].soil_type != array[sp_2].soil_type)
         {return 0;}             // compares soil types. returns 0 if they don't match
 
     else if (array[sp_1].min_temp>array[sp_2].max_temp||array[sp_2].min_temp>array[sp_1].max_temp)
@@ -132,9 +132,47 @@ void print_plant (struct plant *array, int sp){
     printf("\n\n%s; \n\tsoil type: \t\t\t%s; \n\tgrowth pattern: \t\t%s; \n\tmin temperature: \t\t%.2f \u00B0C; \n\tmax temperature: \t\t%.2f \u00B0C;"
                 "\n\tmin humidity: \t\t\t%.2f %%; \n\tmax humidity: \t\t\t%.2f %%; \n\tmin light conditions: \t\t%.0f lm;" 
             "\n\tmax light conditions: \t\t%.0f lm; \n\tmaximum size: \t\t\t%.2f mm; \n\tgrowth speed: \t\t\t%.2f /10",
-            array[sp].name, array[sp].soil_type, array[sp].growth_pattern, array[sp].min_temp, array[sp].max_temp, 
+            array[sp].name, get_soil_type(array,sp), get_growth_pattern(array,sp), array[sp].min_temp, array[sp].max_temp, 
             array[sp].min_humidity,array[sp].max_humidity,array[sp].min_light,array[sp].max_light,array[sp].max_size,array[sp].growth_speed);
 }
+
+char* get_growth_pattern (struct plant *array, int i){
+    switch (array[i].growth_pattern){
+        case 0:
+            return "Ground cover";
+        case 1:
+            return "Upright";
+        case 2:
+            return "Spreading/bushy";
+        case 3:
+            return "Climbing";
+        case 4:
+            return "Trailing";
+    }
+}
+
+char* get_soil_type (struct plant *array, int i){
+    switch (array[i].soil_type){
+        case 0:
+            return "Generic";
+        case 1:
+            return "Sandy";
+        case 2:
+            return "Dense";
+        case 3:
+            return "Bark mix";
+        case 4:
+            return "Bog";
+        case 5:
+            return "Chunky";
+        case 6:
+            return "Aquatic";
+        case 7:
+            return "Light";
+    }
+}
+
+
 
 // ------------------ K-means clustering functions ------------------
 
@@ -146,17 +184,26 @@ void k_means (struct plant *array){
 
     struct plant centroid[k];               // array of centroid plant structs
 
+    
+    // ------------- this array MUST have equal/more elements than chosen k value! -------------
+    
+
     for(int i=0; i<k; i++){
+        centroid[i].soil_type = rand() % (8);
+        centroid[i].growth_pattern = rand() % (5);
         centroid[i].min_temp = rand() % (31);
         centroid[i].max_temp = rand() % (51);
         centroid[i].min_light = rand() % (1502);
         centroid[i].max_light = rand() % (7001);
         centroid[i].min_humidity = rand() % (60-30+1+30);
         centroid[i].max_humidity = rand() % (101);
+        centroid[i].max_size = rand() % (2501);
+        centroid[i].growth_speed = rand() % (11);
     }
 
-    print_plant(centroid,0);
-    
+    for(int i=0; i<k; i++){ 
+    print_plant(centroid,i);
+    }
 
     
 

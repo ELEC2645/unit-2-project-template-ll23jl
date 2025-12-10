@@ -4,8 +4,8 @@
 /* structure for a ~plant~ */
 struct plant {
     char name[100];
-    char soil_type[100];            // sandy, loamy, chalk, clay, etc
-    char growth_pattern[100];       // ground cover, climbing, upright, etc
+    int soil_type;                  // 0 = Generic 1 = Sandy, 2 = Dense, 3 = Bark mix, 4 = Bog, 5 = Chunky, 6 = Aquatic, 7 = Light
+    int growth_pattern;             // 0 = Ground cover, 1 = Upright, 2 = Spreading/bushy, 3 = Climbing, 4 = Trailing
     float min_temp;                 // in degrees Celcius
     float max_temp;                 // in degrees Celcius
     float min_humidity;             // in percent
