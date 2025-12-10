@@ -11,7 +11,6 @@ void print_plant (struct plant *array, int sp);
 char* get_soil_type (struct plant *array, int i);
 char* get_growth_pattern (struct plant *array, int i);
 void k_means (struct plant *array);    
-float eucl_dis (struct plant *array, int sp_1, struct plant centroid);
-
+float eucl_dis (struct plant *array, int sp, struct plant *centroid, int ct);
 
 #endif

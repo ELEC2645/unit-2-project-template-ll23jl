@@ -37,6 +37,7 @@ int main(void)
         plant_array[9] = Pilea;
         
 
+
         /* this will run forever until exit(0) is called in select_menu_item() */
     for(;;) {
         main_menu(plant_array);
