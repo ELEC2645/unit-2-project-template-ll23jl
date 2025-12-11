@@ -182,18 +182,14 @@ void k_means (struct plant *array){
 
 
     int k = 5;                              // number of clusters I want to sort data into ------ MUST be < 4
-
     struct plant centroid[k];               // array of centroid plant structs
     struct plant old_centroid[k];           // array of centroid plant structs
     struct plant clusters[k][10];           // array of plants within an array (clusters)
-    int centroid_index[k];
-    memset(centroid_index, 0, k*sizeof(int));   // create array of zeros of size k 
+    int centroid_index[k];                  // create array of zeros of size k
+     
 
     
-    // ------------- this array MUST have equal/more elements than chosen k value! -------------
-    
-
-    // ------------- Generation of centroids -------------
+    // ------------- Generation of starting centroids -------------
     for(int i=0; i<k; i++){
         sprintf(centroid[i].name, "Centroid %d", i);
         centroid[i].soil_type = rand() % (8);
@@ -211,15 +207,15 @@ void k_means (struct plant *array){
         int conv = 0;           // sets convergence variable to 0
 
     // ------------- Runs until centroid values converge -------------
-    //for (int loop = 0; loop < 25; loop++) {
+    while (conv == 0){
 
-        for (int i = 0; i<k; i++){
-            print_plant(centroid,i);
-        }
+        memset(centroid_index, 0, k * sizeof(int));         // sets all indexes to zero
+        memset(clusters, 0, sizeof(clusters));              // empties clusters
 
-        // sets new centroid values to old centroids
+
+        // sets current centroid values to old centroid array
         for (int cen = 0; cen < k; cen++){
-            old_centroid[cen] = centroid[k];
+            old_centroid[cen] = centroid[cen];
         }
 
 
@@ -234,8 +230,6 @@ void k_means (struct plant *array){
             for (int cen = 0; cen < k; cen++){
                 new_dis = eucl_dis(array, plant, centroid, cen);
 
-                printf("\nnew dis = %f", new_dis);
-
                 if (new_dis < old_dis) {
                     closest_centroid = cen;
                     old_dis = new_dis;
@@ -246,7 +240,6 @@ void k_means (struct plant *array){
             // assign plant to the array of its closest centroid
             clusters[closest_centroid][centroid_index[closest_centroid]] = array[plant];
             
-
             // increment centroid_index
             centroid_index[closest_centroid]++;
         }
@@ -256,6 +249,12 @@ void k_means (struct plant *array){
 
         for (int clus = 0; clus < k; clus++){
             
+            if (centroid_index[clus] == 0) {
+                // Reassign empty cluster centroid to a random plant
+                centroid[clus] = array[rand() % 10];
+                continue;
+            }
+
             // set centroid features to zeros
             
             centroid[clus].soil_type = 0;
@@ -271,44 +270,57 @@ void k_means (struct plant *array){
 
             // calculate new values by the mean value
 
+            // sum features in the cluster
             for (int index = 0; index < centroid_index[clus]; index++){
                 centroid[clus].soil_type += clusters[clus][index].soil_type;
                 centroid[clus].growth_pattern += clusters[clus][index].growth_pattern;
                 centroid[clus].min_temp += clusters[clus][index].min_temp;
                 centroid[clus].max_temp += clusters[clus][index].max_temp;
-                centroid[clus].min_light += clusters[clus][index].min_humidity;
-                centroid[clus].max_light += clusters[clus][index].max_humidity;
-                centroid[clus].min_humidity += clusters[clus][index].min_light;
-                centroid[clus].max_humidity += clusters[clus][index].max_light;
+                centroid[clus].min_humidity += clusters[clus][index].min_humidity;
+                centroid[clus].max_humidity += clusters[clus][index].max_humidity;
+                centroid[clus].min_light += clusters[clus][index].min_light;
+                centroid[clus].max_light += clusters[clus][index].max_light;
                 centroid[clus].max_size += clusters[clus][index].max_size;
                 centroid[clus].growth_speed += clusters[clus][index].growth_speed;
             }
+
+            // divide features by number of items in the cluster (to find mean)
+            centroid[clus].soil_type /= centroid_index[clus];
+            centroid[clus].growth_pattern /= centroid_index[clus];
+            centroid[clus].min_temp /= centroid_index[clus]; 
+            centroid[clus].max_temp /= centroid_index[clus];  
+            centroid[clus].min_humidity /= centroid_index[clus];  
+            centroid[clus].max_humidity /= centroid_index[clus];  
+            centroid[clus].min_light /= centroid_index[clus];  
+            centroid[clus].max_light /= centroid_index[clus];  
+            centroid[clus].max_size /= centroid_index[clus];  
+            centroid[clus].growth_speed /= centroid_index[clus];  
+
         }
 
         // ------------- Calculate comparison for convergence -------------
 
-        for (int cen = 0; cen < k; cen++){
-            if (centroid[cen].soil_type != old_centroid[cen].soil_type){conv = 0;}
-            else if (centroid[cen].growth_pattern != old_centroid[cen].growth_pattern){conv = 0;}
-            else if (centroid[cen].min_temp != old_centroid[cen].min_temp){conv = 0;}
-            else if (centroid[cen].min_humidity != old_centroid[cen].min_humidity){conv = 0;}
-            else if (centroid[cen].min_light != old_centroid[cen].min_light){conv = 0;}
-            else if (centroid[cen].max_humidity != old_centroid[cen].max_humidity){conv = 0;}
-            else if (centroid[cen].max_light != old_centroid[cen].max_light){conv = 0;}
-            else if (centroid[cen].max_temp != old_centroid[cen].max_temp){conv = 0;}
-            else if (centroid[cen].max_size != old_centroid[cen].max_size){conv = 0;}
-            else if (centroid[cen].growth_speed != old_centroid[cen].growth_speed){conv = 0;}
-            else {conv = 1;}
-        }
+        conv = 1;  // assume converged
 
-        for (int clus = 0; clus < k; clus++){
-            printf("\nCluster %d:",clus);
-            for (int i = 0; i < centroid_index[clus]; i++){
-                printf("\n\t %s",clusters[clus][i].name);
+
+        // check old centroid and current centroid match:
+        for (int cen = 0; cen < k; cen++) {
+            if (centroid[cen].soil_type     != old_centroid[cen].soil_type    ||
+                centroid[cen].growth_pattern!= old_centroid[cen].growth_pattern||
+                centroid[cen].min_temp      != old_centroid[cen].min_temp     ||
+                centroid[cen].min_humidity  != old_centroid[cen].min_humidity ||
+                centroid[cen].min_light     != old_centroid[cen].min_light    ||
+                centroid[cen].max_humidity  != old_centroid[cen].max_humidity ||
+                centroid[cen].max_light     != old_centroid[cen].max_light    ||
+                centroid[cen].max_temp      != old_centroid[cen].max_temp     ||
+                centroid[cen].max_size      != old_centroid[cen].max_size     ||
+                centroid[cen].growth_speed  != old_centroid[cen].growth_speed)
+            {
+                conv = 0;
+                break;  // no need to check more
             }
         }
-    
-    //}
+    }
 
 
     // ------------- Print clusters -------------
@@ -322,7 +334,7 @@ void k_means (struct plant *array){
 }
 
 /* Calculates the euclidean distance between a plant and a centroid */
-float eucl_dis (struct plant *array, int sp, struct plant *centroid, int ct){
+float eucl_dis (struct plant *array, int sp, struct plant *centroid, int ct) {
 
     float   sum = pow((array[sp].growth_pattern-centroid[ct].growth_pattern)*20,2);             // 0 - 4        *20 to scale 0-100
             sum += pow((array[sp].soil_type-centroid[ct].soil_type)*14,2);                      // 0 - 7        *14 to scale 0-100
@@ -336,6 +348,4 @@ float eucl_dis (struct plant *array, int sp, struct plant *centroid, int ct){
             float distance = sqrt(sum);
     return distance;
 }
-
-
 
